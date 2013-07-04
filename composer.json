@@ -1,27 +1,18 @@
 {
-    "name": "innobitLab/php-xapi-sdk",
+    "name": "innobitlab/php-xapi-sdk",
     "description": "PHP sdk for MosaicoX RESTful API.",
-    "homepage": "https://github.com/innobitLab/php-xapi-sdk",
-    "license": "MIT",
-    "keywords": ["mosaico x", "xapi", "sdk"],
-    "version": "0.1",
-    "authors": [
-        {
-            "name": "Gabriele Tondi",
-            "email": "g.tondi@teammosaico.it",
-            "homepage": "http://about.me/gabrieletondi"
-        }
-    ],
     "require": {
-        "php": ">=5.3",
         "nategood/httpful": "*"
-    },
-    "autoload": {
-        "psr-0": {
-            "XAPISdk": "src/"
-        }
     },
     "require-dev": {
         "phpunit/phpunit": "*"
-    }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gabriele Tondi",
+            "email": "g.tondi@teammosaico.it"
+        }
+    ],
+    "minimum-stability": "dev"
 }

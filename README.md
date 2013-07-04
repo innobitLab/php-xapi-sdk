@@ -1,6 +1,6 @@
 # php-xapi-sdk #
 
-PHP sdk for MosaicoX RESTful API.
+PHP sdk for Mosaico X RESTful API.
 
 ## Installation ##
 

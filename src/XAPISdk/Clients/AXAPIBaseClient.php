@@ -68,23 +68,25 @@ abstract class AXAPIBaseClient implements IXAPIClient {
     public function getAsJsonObj($id) {
         $this->logDebug('Called get on resource [' . $this->getResourceName() . ']');
 
+        /** @var \Httpful\Request $request */
         $request = $this->createGetRequestJson($this->getResourceName(), $id);
 
         $this->logDebug('Request created');
 
+        /** @var \Httpful\Response $response */
         $response = $request->send();
 
         $this->logDebug('Request sent, response [' . $response->raw_body . ']');
 
-        if ($response->code != HttpCodes::OK) {
-            $e = new ClientException('Cannot get resource [' . $this->getResourceName() . '] with id [' . $id . '], xapi response [' . $response->raw_body . ']');
+        if ($response->code == HttpCodes::NOTFOUND) {
+            $e = new ResourceNotFoundException('resource [' . $this->getResourceName() . '] with id [' . $id . '] not found, xapi response [' . $response->raw_body . ']');
             $this->logError('Error trying to get resource', $e);
             throw $e;
         }
 
-        if (sizeof($response->body) === 0) {
-            $e = new ClientException('Resource [' . $this->getResourceName() . '] with id [' . $id . '] not found!');
-            $this->logError('Cannot find resource', $e);
+        if ($response->code != HttpCodes::OK) {
+            $e = new ClientException('Cannot get resource [' . $this->getResourceName() . '] with id [' . $id . '], xapi response [' . $response->raw_body . ']');
+            $this->logError('Error trying to get resource', $e);
             throw $e;
         }
 
@@ -95,8 +97,25 @@ abstract class AXAPIBaseClient implements IXAPIClient {
     }
 
     public function update(IBusinessObject $obj) {
-        // TODO : implement the update on objects! [PUT]
-        throw new \Exception('Not implemented yet!');
+        $this->logDebug('Called update on resource [' . $this->getResourceName() . ']');
+
+        $request = $this->createPutRequestJson($this->getResourceName(), $obj->getId(), $obj->toJson());
+
+        $this->logDebug('Request created');
+
+        $response = $request->send();
+
+        $this->logDebug('Request sent, response [' . $response->raw_body . ']');
+
+        if ($response->code != HttpCodes::OK) {
+            $e = new ClientException('Cannot add resource [' . $this->getResourceName() . '], xapi response [' . $response->raw_body . ']');
+            $this->logError('Error trying to add resource', $e);
+            throw $e;
+        }
+
+        $businessObjClassName = $this->getBusinessObjectClassName();
+
+        return $businessObjClassName::fromJson($response->body, $this);
     }
 
     public function add(IBusinessObject $obj) {
@@ -122,8 +141,21 @@ abstract class AXAPIBaseClient implements IXAPIClient {
     }
 
     public function delete($id) {
-        // TODO : implement the update on objects! [DELETE]
-        throw new \Exception('Not implemented yet!');
+        $this->logDebug('Called delete on resource [' . $this->getResourceName() . ']');
+
+        $request = $this->createDeleteRequestJson($this->getResourceName(), $id);
+
+        $this->logDebug('Request created');
+
+        $response = $request->send();
+
+        $this->logDebug('Request sent, response [' . $response->raw_body . ']');
+
+        if ($response->code != HttpCodes::NOCONTENT) {
+            $e = new ClientException('Cannot delete resource [' . $this->getResourceName() . '] with id [' . $id . '], xapi response [' . $response->raw_body . ']');
+            $this->logError('Error trying to delete resource', $e);
+            throw $e;
+        }
     }
 
     public function listAll(array $kvpFilter = null) {
@@ -166,6 +198,19 @@ abstract class AXAPIBaseClient implements IXAPIClient {
         return $request;
     }
 
+    protected function createPutRequestJson($resourceName, $resourceId, $jsonPostData) {
+        $resourcePath = $this->calculateResourcePath($resourceName, $resourceId);
+        $uri = $this->calculateUriForResourcePath($resourcePath);
+
+        $request = Request::put($uri);
+
+        $this->addAuthenticationHeadersToRequest($request, $resourcePath);
+
+        $request->sendsJson()->body($jsonPostData);
+
+        return $request;
+    }
+
     protected function createGetRequestJson($resourceName, $resourceId = null, array $kvpFilter = null) {
         $resourcePath = $this->calculateResourcePath($resourceName, $resourceId);
         $uri = $this->calculateUriForResourcePath($resourcePath, $kvpFilter);
@@ -175,6 +220,20 @@ abstract class AXAPIBaseClient implements IXAPIClient {
         $this->addAuthenticationHeadersToRequest($getRequest, $resourcePath);
 
         $getRequest->expectsJson();
+
+        return $getRequest;
+    }
+
+    protected function createDeleteRequestJson($resourceName, $resourceId) {
+        $resourcePath = $this->calculateResourcePath($resourceName, $resourceId);
+        $uri = $this->calculateUriForResourcePath($resourcePath);
+
+        /** @var \Httpful\Request $getRequest  */
+        $getRequest = Request::delete($uri);
+
+        $getRequest->autoParse(false);
+
+        $this->addAuthenticationHeadersToRequest($getRequest, $resourcePath);
 
         return $getRequest;
     }

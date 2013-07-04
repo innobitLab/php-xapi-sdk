@@ -4,6 +4,11 @@
     "require": {
         "nategood/httpful": "*"
     },
+    "autoload": {
+        "psr-0": {
+            "XAPISdk": "src/"
+        }
+    },
     "require-dev": {
         "phpunit/phpunit": "*"
     },

@@ -20,3 +20,5 @@
 .idea/scopes/scope_settings.xml
 
 /vendor/
+
+composer.lock

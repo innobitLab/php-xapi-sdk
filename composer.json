@@ -2,7 +2,7 @@
     "name": "innobitlab/php-xapi-sdk",
     "description": "PHP sdk for MosaicoX RESTful API.",
     "require": {
-        "nategood/httpful": "*"
+        "nategood/httpful": "dev-master"
     },
     "autoload": {
         "psr-0": {

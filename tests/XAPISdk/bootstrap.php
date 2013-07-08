@@ -7,3 +7,11 @@
  */
 
 require_once '../vendor/autoload.php';
+
+class Bootstrap {
+
+    const XAPI_URI = 'http://api.mosaicox.net';
+    const XAPI_PUBLIC_KEY = 'test';
+    const XAPI_PRIVATE_KEY = 'unitTests';
+
+}

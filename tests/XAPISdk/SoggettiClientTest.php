@@ -10,22 +10,23 @@ require_once 'bootstrap.php';
 
 class SoggettiClientTest extends PHPUnit_Framework_TestCase {
 
-    const XAPI_URI = 'http://api.mosaicox.net';
-    const XAPI_PUBLIC_KEY = '';
-    const XAPI_PRIVATE_KEY = '';
+    /** @var \XAPISdk\Clients\SoggettiClient  */
+    private $_client;
 
-    public function test_addingSoggetto_shouldReturnObjectWithSameProperties() {
+    public function setUp() {
         $sdkConf = new \XAPISdk\Configuration\XAPISdkConfiguration(
-            self::XAPI_URI,
-            self::XAPI_PUBLIC_KEY,
-            self::XAPI_PRIVATE_KEY
+            Bootstrap::XAPI_URI,
+            Bootstrap::XAPI_PUBLIC_KEY,
+            Bootstrap::XAPI_PRIVATE_KEY
         );
 
         $clientFactory = new \XAPISdk\Clients\ClientFactory($sdkConf);
 
         /** @var \XAPISdk\Clients\SoggettiClient $soggettiClient */
-        $soggettiClient = $clientFactory->getClientForBusinessObject(\XAPISdk\Data\BusinessObjects\Soggetto::CLASS_NAME);
+        $this->_client = $clientFactory->getClientForBusinessObject(\XAPISdk\Data\BusinessObjects\Soggetto::CLASS_NAME);
+    }
 
+    public function test_addingSoggetto_shouldReturnObjectWithSameProperties() {
         $soggettoToAdd = new \XAPISdk\Data\BusinessObjects\Soggetto();
         $soggettoToAdd->setRagioneSociale('Innobit s.r.l. & Co.');
         $soggettoToAdd->setNome('Gabriele');
@@ -36,7 +37,7 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
         $soggettoToAdd->setNote('This is a test!');
         $soggettoToAdd->setSoggettoInMora(false);
 
-        $soggettoAdded = $soggettiClient->add($soggettoToAdd);
+        $soggettoAdded = $this->_client->add($soggettoToAdd);
 
         $this->assertEquals($soggettoToAdd->getRagioneSociale(), $soggettoAdded->getRagioneSociale());
         $this->assertEquals($soggettoToAdd->getNome(), $soggettoAdded->getNome());
@@ -54,18 +55,7 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
      * @depends test_addingSoggetto_shouldReturnObjectWithSameProperties
      */
     public function test_gettingSoggetto_shouldReturnObjectWithSameProperties(\XAPISdk\Data\BusinessObjects\Soggetto $soggettoAdded) {
-        $sdkConf = new \XAPISdk\Configuration\XAPISdkConfiguration(
-            self::XAPI_URI,
-            self::XAPI_PUBLIC_KEY,
-            self::XAPI_PRIVATE_KEY
-        );
-
-        $clientFactory = new \XAPISdk\Clients\ClientFactory($sdkConf);
-
-        /** @var \XAPISdk\Clients\SoggettiClient $soggettiClient */
-        $soggettiClient = $clientFactory->getClientForBusinessObject(\XAPISdk\Data\BusinessObjects\Soggetto::CLASS_NAME);
-
-        $soggettoGetted = $soggettiClient->get($soggettoAdded->getId());
+        $soggettoGetted = $this->_client->get($soggettoAdded->getId());
 
         $this->assertEquals($soggettoAdded->getRagioneSociale(), $soggettoGetted->getRagioneSociale());
         $this->assertEquals($soggettoAdded->getNome(), $soggettoGetted->getNome());
@@ -83,17 +73,6 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
      * @depends test_gettingSoggetto_shouldReturnObjectWithSameProperties
      */
     public function test_editingSoggetto_shouldReturnObjectWithSameProperties(\XAPISdk\Data\BusinessObjects\Soggetto $soggettoGetted) {
-        $sdkConf = new \XAPISdk\Configuration\XAPISdkConfiguration(
-            self::XAPI_URI,
-            self::XAPI_PUBLIC_KEY,
-            self::XAPI_PRIVATE_KEY
-        );
-
-        $clientFactory = new \XAPISdk\Clients\ClientFactory($sdkConf);
-
-        /** @var \XAPISdk\Clients\SoggettiClient $soggettiClient */
-        $soggettiClient = $clientFactory->getClientForBusinessObject(\XAPISdk\Data\BusinessObjects\Soggetto::CLASS_NAME);
-
         $soggettoToEdit = $soggettoGetted;
 
         $soggettoToEdit->setRagioneSociale($soggettoToEdit->getRagioneSociale() . '_1');
@@ -105,7 +84,7 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
         $soggettoToEdit->setNote($soggettoToEdit->getNote() . '_1');
         $soggettoToEdit->setSoggettoInMora(true);
 
-        $soggettoEdited = $soggettiClient->update($soggettoToEdit);
+        $soggettoEdited = $this->_client->update($soggettoToEdit);
 
         $this->assertEquals($soggettoToEdit->getRagioneSociale(), $soggettoEdited->getRagioneSociale());
         $this->assertEquals($soggettoToEdit->getNome(), $soggettoEdited->getNome());
@@ -124,19 +103,15 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
      * @expectedException \XAPISdk\Clients\ResourceNotFoundException
      */
     public function test_deletingSoggetto_shouldNotBeFound(\XAPISdk\Data\BusinessObjects\Soggetto $soggettoEdited) {
-        $sdkConf = new \XAPISdk\Configuration\XAPISdkConfiguration(
-            self::XAPI_URI,
-            self::XAPI_PUBLIC_KEY,
-            self::XAPI_PRIVATE_KEY
-        );
+        $this->_client->delete($soggettoEdited->getId());
 
-        $clientFactory = new \XAPISdk\Clients\ClientFactory($sdkConf);
+        $this->_client->get($soggettoEdited->getId());
+    }
 
-        /** @var \XAPISdk\Clients\SoggettiClient $soggettiClient */
-        $soggettiClient = $clientFactory->getClientForBusinessObject(\XAPISdk\Data\BusinessObjects\Soggetto::CLASS_NAME);
-
-        $soggettiClient->delete($soggettoEdited->getId());
-
-        $soggettiClient->get($soggettoEdited->getId());
+    /**
+     * @expectedException \XAPISdk\Clients\ResourceNotFoundException
+     */
+    public function test_gettingSoggettoWithWrongId_shouldThrowException() {
+        $sogg = $this->_client->get('YOU_CANNOT_FIND_ME');
     }
 }

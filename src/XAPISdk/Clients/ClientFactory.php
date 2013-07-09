@@ -11,19 +11,27 @@ namespace XAPISdk\Clients;
 
 use XAPISdk\Configuration\XAPISdkConfiguration;
 use XAPISdk\Data\BusinessObjects\Agente;
+use XAPISdk\Data\BusinessObjects\Articolo;
 use XAPISdk\Data\BusinessObjects\Banca;
+use XAPISdk\Data\BusinessObjects\CategoriaMerceologica;
 use XAPISdk\Data\BusinessObjects\Contatto;
 use XAPISdk\Data\BusinessObjects\Deposito;
+use XAPISdk\Data\BusinessObjects\Imballo;
 use XAPISdk\Data\BusinessObjects\Iva;
 use XAPISdk\Data\BusinessObjects\Listino;
+use XAPISdk\Data\BusinessObjects\ListinoPrezzo;
+use XAPISdk\Data\BusinessObjects\Marca;
 use XAPISdk\Data\BusinessObjects\ModalitaPagamento;
 use XAPISdk\Data\BusinessObjects\NaturaGiuridica;
 use XAPISdk\Data\BusinessObjects\Nazione;
 use XAPISdk\Data\BusinessObjects\Rapporto;
 use XAPISdk\Data\BusinessObjects\Sede;
 use XAPISdk\Data\BusinessObjects\Soggetto;
+use XAPISdk\Data\BusinessObjects\TipoArticolo;
 use XAPISdk\Data\BusinessObjects\TipoSede;
 use XAPISdk\Data\BusinessObjects\TipoSoggetto;
+use XAPISdk\Data\BusinessObjects\UnitaMisura;
+use XAPISdk\Data\BusinessObjects\Valuta;
 
 class ClientFactory {
 
@@ -90,6 +98,30 @@ class ClientFactory {
 
             case Banca::CLASS_NAME:
                 return $this->instantiateClient(BancheClient::CLASS_NAME);
+
+            case Articolo::CLASS_NAME:
+                return $this->instantiateClient(ArticoliClient::CLASS_NAME);
+
+            case CategoriaMerceologica::CLASS_NAME:
+                return $this->instantiateClient(CategoriaMerceologicaClient::CLASS_NAME);
+
+            case Imballo::CLASS_NAME:
+                return $this->instantiateClient(ImballiClient::CLASS_NAME);
+
+            case ListinoPrezzo::CLASS_NAME:
+                return $this->instantiateClient(ListiniPrezzoClient::CLASS_NAME);
+
+            case Marca::CLASS_NAME:
+                return $this->instantiateClient(MarcheClient::CLASS_NAME);
+
+            case TipoArticolo::CLASS_NAME:
+                return $this->instantiateClient(TipiArticoloClient::CLASS_NAME);
+
+            case UnitaMisura::CLASS_NAME:
+                return $this->instantiateClient(UnitaMisuraClient::CLASS_NAME);
+
+            case Valuta::CLASS_NAME:
+                return $this->instantiateClient(ValuteClient::CLASS_NAME);
 
             default:
                 throw new \Exception('Cannot instantiace client businessObjectType [' . $businessObjectType . ']');

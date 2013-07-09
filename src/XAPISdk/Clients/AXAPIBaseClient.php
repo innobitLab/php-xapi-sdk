@@ -76,16 +76,16 @@ abstract class AXAPIBaseClient implements IXAPIClient {
         /** @var \Httpful\Response $response */
         $response = $request->send();
 
-        $this->logDebug('Request sent, response [' . $response->raw_body . ']');
+        $this->logDebug('Request sent, response [' . print_r($response, true) . ']');
 
         if ($response->code == HttpCodes::NOTFOUND) {
-            $e = new ResourceNotFoundException('resource [' . $this->getResourceName() . '] with id [' . $id . '] not found, xapi response [' . $response->raw_body . ']');
+            $e = new ResourceNotFoundException('resource [' . $this->getResourceName() . '] with id [' . $id . '] not found, xapi response [' . print_r($response, true) . ']');
             $this->logError('Error trying to get resource', $e);
             throw $e;
         }
 
         if ($response->code != HttpCodes::OK) {
-            $e = new ClientException('Cannot get resource [' . $this->getResourceName() . '] with id [' . $id . '], xapi response [' . $response->raw_body . ']');
+            $e = new ClientException('Cannot get resource [' . $this->getResourceName() . '] with id [' . $id . '], xapi response [' . print_r($response, true) . ']');
             $this->logError('Error trying to get resource', $e);
             throw $e;
         }
@@ -105,10 +105,10 @@ abstract class AXAPIBaseClient implements IXAPIClient {
 
         $response = $request->send();
 
-        $this->logDebug('Request sent, response [' . $response->raw_body . ']');
+        $this->logDebug('Request sent, response [' . print_r($response, true) . ']');
 
         if ($response->code != HttpCodes::OK) {
-            $e = new ClientException('Cannot add resource [' . $this->getResourceName() . '], xapi response [' . $response->raw_body . ']');
+            $e = new ClientException('Cannot add resource [' . $this->getResourceName() . '], xapi response [' . print_r($response, true) . ']');
             $this->logError('Error trying to add resource', $e);
             throw $e;
         }
@@ -127,10 +127,10 @@ abstract class AXAPIBaseClient implements IXAPIClient {
 
         $response = $request->send();
 
-        $this->logDebug('Request sent, response [' . $response->raw_body . ']');
+        $this->logDebug('Request sent, response [' . print_r($response, true) . ']');
 
         if ($response->code != HttpCodes::CREATED) {
-            $e = new ClientException('Cannot add resource [' . $this->getResourceName() . '], xapi response [' . $response->raw_body . ']');
+            $e = new ClientException('Cannot add resource [' . $this->getResourceName() . '], xapi response [' . print_r($response, true) . ']');
             $this->logError('Error trying to add resource', $e);
             throw $e;
         }
@@ -149,10 +149,10 @@ abstract class AXAPIBaseClient implements IXAPIClient {
 
         $response = $request->send();
 
-        $this->logDebug('Request sent, response [' . $response->raw_body . ']');
+        $this->logDebug('Request sent, response [' . print_r($response, true) . ']');
 
         if ($response->code != HttpCodes::NOCONTENT) {
-            $e = new ClientException('Cannot delete resource [' . $this->getResourceName() . '] with id [' . $id . '], xapi response [' . $response->raw_body . ']');
+            $e = new ClientException('Cannot delete resource [' . $this->getResourceName() . '] with id [' . $id . '], xapi response [' . print_r($response, true) . ']');
             $this->logError('Error trying to delete resource', $e);
             throw $e;
         }
@@ -167,10 +167,10 @@ abstract class AXAPIBaseClient implements IXAPIClient {
 
         $response = $request->send();
 
-        $this->logDebug('Request sent, response [' . $response->raw_body . ']');
+        $this->logDebug('Request sent, response [' . print_r($response, true) . ']');
 
         if ($response->code != HttpCodes::OK) {
-            $e = new ClientException('Cannot list resource[' . $this->getResourceName() . '], xapi response [' . $response->raw_body . ']');
+            $e = new ClientException('Cannot list resource[' . $this->getResourceName() . '], xapi response [' . print_r($response, true) . ']');
             $this->logError('Error trying to list resource', $e);
             throw $e;
         }

@@ -40,6 +40,7 @@ class Articolo extends ABaseBusinessObject {
     protected $_validita;
     protected $_stampaNelListino;
     protected $_note;
+    protected $_attivo;
 
     protected $_unitaMisuraMagazzino;
     protected $_unitaMisuraCarico;
@@ -137,6 +138,14 @@ class Articolo extends ABaseBusinessObject {
 
     public function setFattoreUMScarico($fattoreUMScarico) {
         $this->_fattoreUMScarico = $fattoreUMScarico;
+    }
+
+    public function setAttivo($attivo) {
+        $this->_attivo = $attivo;
+    }
+
+    public function getAttivo() {
+        return $this->_attivo;
     }
 
     public function getFattoreUMScarico() {
@@ -337,7 +346,8 @@ class Articolo extends ABaseBusinessObject {
             'tipoArticolo' => $this->serializedField($this->_tipoArticolo),
             'categoriaMerceologica' => $this->serializedField($this->_categoriaMerceologica),
             'marca' => $this->serializedField($this->_marca),
-            'iva' => $this->serializedField($this->_iva));
+            'iva' => $this->serializedField($this->_iva),
+            'attivo' => $this->serializedField($this->_attivo));
 
         return json_encode($toSerialize);
     }
@@ -346,6 +356,9 @@ class Articolo extends ABaseBusinessObject {
 
         if (isset($jsonObj->codice))
             $this->setCodice($jsonObj->codice);
+
+        if (isset($jsonObj->attivo))
+            $this->setAttivo($jsonObj->attivo);
 
         if (isset($jsonObj->codiceEtichetta))
             $this->setCodiceEtichetta($jsonObj->codiceEtichetta);

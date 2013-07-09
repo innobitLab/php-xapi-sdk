@@ -47,7 +47,7 @@ class XAPISdkConfiguration {
 
     // region -- METHODS --
 
-    public function __construct($xapiUri, $xapiPublicKey, $xapiPrivateKey, $logger = null) {
+    public function __construct($xapiUri, $xapiPublicKey, $xapiPrivateKey, ILog $logger = null) {
         $this->_xapiUri = $xapiUri;
         $this->_xapiPublicKey = $xapiPublicKey;
         $this->_xapiPrivateKey = $xapiPrivateKey;

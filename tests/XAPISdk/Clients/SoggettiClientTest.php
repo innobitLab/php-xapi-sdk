@@ -6,7 +6,7 @@
  * mail: info@innobit.it
  */
 
-require_once 'bootstrap.php';
+require_once __DIR__ . '/../../bootstrap.php';
 
 class SoggettiClientTest extends PHPUnit_Framework_TestCase {
 
@@ -67,6 +67,17 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($soggettoAdded->getSoggettoInMora(), $soggettoGetted->getSoggettoInMora());
 
         return $soggettoGetted;
+    }
+
+    /**
+     * @depends test_gettingSoggetto_shouldReturnObjectWithSameProperties
+     */
+    public function test_listingSoggetti_shouldReturnObjectsCountAsCount() {
+        $count = $this->_client->count();
+
+        $soggettiList = $this->_client->listAll();
+
+        $this->assertEquals($count, sizeof($soggettiList));
     }
 
     /**

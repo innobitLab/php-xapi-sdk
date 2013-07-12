@@ -6,7 +6,9 @@
  * mail: info@innobit.it
  */
 
-require_once '../vendor/autoload.php';
+ini_set('display_errors', 'On');
+
+require_once 'vendor/autoload.php';
 
 class Bootstrap {
 

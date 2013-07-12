@@ -14,6 +14,7 @@ use XAPISdk\Data\BusinessObjects\Agente;
 use XAPISdk\Data\BusinessObjects\Articolo;
 use XAPISdk\Data\BusinessObjects\Banca;
 use XAPISdk\Data\BusinessObjects\CategoriaMerceologica;
+use XAPISdk\Data\BusinessObjects\Comune;
 use XAPISdk\Data\BusinessObjects\Contatto;
 use XAPISdk\Data\BusinessObjects\Deposito;
 use XAPISdk\Data\BusinessObjects\Imballo;
@@ -24,7 +25,9 @@ use XAPISdk\Data\BusinessObjects\Marca;
 use XAPISdk\Data\BusinessObjects\ModalitaPagamento;
 use XAPISdk\Data\BusinessObjects\NaturaGiuridica;
 use XAPISdk\Data\BusinessObjects\Nazione;
+use XAPISdk\Data\BusinessObjects\Provincia;
 use XAPISdk\Data\BusinessObjects\Rapporto;
+use XAPISdk\Data\BusinessObjects\Regione;
 use XAPISdk\Data\BusinessObjects\Sede;
 use XAPISdk\Data\BusinessObjects\Soggetto;
 use XAPISdk\Data\BusinessObjects\TipoArticolo;
@@ -122,6 +125,15 @@ class ClientFactory {
 
             case Valuta::CLASS_NAME:
                 return $this->instantiateClient(ValuteClient::CLASS_NAME);
+
+            case Comune::CLASS_NAME:
+                return $this->instantiateClient(ComuniClient::CLASS_NAME);
+
+            case Provincia::CLASS_NAME:
+                return $this->instantiateClient(ProvinceClient::CLASS_NAME);
+
+            case Regione::CLASS_NAME:
+                return $this->instantiateClient(RegioniClient::CLASS_NAME);
 
             default:
                 throw new \Exception('Cannot instantiace client businessObjectType [' . $businessObjectType . ']');

@@ -6,7 +6,7 @@
  * mail: info@innobit.it
  */
 
-require_once 'bootstrap.php';
+require_once __DIR__ . '/../../bootstrap.php';
 
 class MarcheClientTest extends PHPUnit_Framework_TestCase {
 
@@ -45,6 +45,17 @@ class MarcheClientTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($marcaAdded->getNome(), $marcaGetted->getNome());
 
         return $marcaGetted;
+    }
+
+    /**
+     * @depends test_gettingMarca_shouldReturnObjectWithSameProperties
+     */
+    public function test_listingMarche_shouldReturnObjectsCountAsCount() {
+        $count = $this->_client->count();
+
+        $marcheList = $this->_client->listAll();
+
+        $this->assertEquals($count, sizeof($marcheList));
     }
 
     /**

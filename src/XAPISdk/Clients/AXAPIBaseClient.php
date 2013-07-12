@@ -29,6 +29,10 @@ abstract class AXAPIBaseClient implements IXAPIClient {
     const PARAM_QUERY__FIELD_SEP = '|';
     const PARAM_QUERY__FILTER_SEP = ',';
 
+    const PARAM_OFFSET__NAME = 'offset';
+    const PARAM_LIMIT__NAME = 'limit';
+    const PARAM_LIMIT__MAX_VALUE = 500;
+
     const CLASS_NAME = __CLASS__;
 
     // endregion
@@ -158,10 +162,57 @@ abstract class AXAPIBaseClient implements IXAPIClient {
         }
     }
 
+    public function count() {
+        $this->logDebug('Called count on resource [' . $this->getResourceName() . ']');
+
+        $request = $this->createGetRequestJson($this->getResourceName(), 'count');
+        $this->logDebug('Request created');
+
+        $response = $request->send();
+        $this->logDebug('Request sent, response [' . $response->__toString() . ']');
+
+        if ($response->code != HttpCodes::OK) {
+            $e = new ClientException('Cannot count resource[' . $this->getResourceName() . '], xapi response [' . $response->__toString() . ']');
+            $this->logError('Error during count', $e);
+            throw $e;
+        }
+
+        $count = $response->body->count;
+
+        return $count;
+    }
+
     public function listAll(array $kvpFilter = null) {
         $this->logDebug('Called listAll on resource [' . $this->getResourceName() . ']');
 
-        $request = $this->createGetRequestJson($this->getResourceName(), null, $kvpFilter);
+        $count = $this->count();
+
+        $res = array();
+        $from = 0;
+
+        do {
+            $tmpRes = $this->listFromLimit($kvpFilter, $from, self::PARAM_LIMIT__MAX_VALUE);
+            $res = array_merge($res, $tmpRes);
+
+            $from += self::PARAM_LIMIT__MAX_VALUE;
+        } while ($from < $count);
+
+        return $res;
+    }
+
+    protected function listFromLimit(array $kvpFilter = null, $from = 0, $limit = self::PARAM_LIMIT__MAX_VALUE) {
+        $this->logDebug('Called listFromLimit on resource [' . $this->getResourceName() . ']');
+
+        $params = array();
+
+        if (!empty($kvpFilter)) {
+            $params[self::PARAM_QUERY__NAME] = $this->calculateQueryParamForKvpFilter($kvpFilter);
+        }
+
+        $params[self::PARAM_OFFSET__NAME] = $from;
+        $params[self::PARAM_LIMIT__NAME] = $limit;
+
+        $request = $this->createGetRequestJson($this->getResourceName(), null, $params);
 
         $this->logDebug('Request created');
 
@@ -211,9 +262,9 @@ abstract class AXAPIBaseClient implements IXAPIClient {
         return $request;
     }
 
-    protected function createGetRequestJson($resourceName, $resourceId = null, array $kvpFilter = null) {
+    protected function createGetRequestJson($resourceName, $resourceId = null, array $params = array()) {
         $resourcePath = $this->calculateResourcePath($resourceName, $resourceId);
-        $uri = $this->calculateUriForResourcePath($resourcePath, $kvpFilter);
+        $uri = $this->calculateUriForResourcePath($resourcePath, $params);
 
         $getRequest = Request::get($uri);
 
@@ -257,7 +308,7 @@ abstract class AXAPIBaseClient implements IXAPIClient {
         $request->addHeader(self::HEADER_NAME__SIGNATURE, $hashSignature);
     }
 
-    protected function calculateUriForResourcePath($resourcePath, array $kvpFilter = null) {
+    protected function calculateUriForResourcePath($resourcePath, array $params = array()) {
         $glue = '';
 
         $xapiUri = $this->_xapiSdkConf->getXapiUri();
@@ -267,8 +318,12 @@ abstract class AXAPIBaseClient implements IXAPIClient {
 
         $uri = $xapiUri . $glue . $resourcePath;
 
-        if (!empty($kvpFilter))
-            $uri .= '?' . $this->calculateQueryParamForKvpFilter($kvpFilter);
+        $sep = '?';
+
+        foreach($params as $pKey => $pValue) {
+            $uri .= $sep . $pKey . '=' . $pValue;
+            $sep = '&';
+        }
 
         return $uri;
     }

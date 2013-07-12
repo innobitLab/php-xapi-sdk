@@ -6,7 +6,7 @@
  * mail: info@innobit.it
  */
 
-require_once 'bootstrap.php';
+require_once __DIR__ . '/../../bootstrap.php';
 
 class ArticoliClientTest extends PHPUnit_Framework_TestCase {
 
@@ -130,6 +130,17 @@ class ArticoliClientTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($articoloAdded->getAttivo(), $articoloGetted->getAttivo());
 
         return $articoloGetted;
+    }
+
+    /**
+     * @depends test_gettingArticolo_shouldReturnObjectWithSameProperties
+     */
+    public function test_listingArticoli_shouldReturnObjectsCountAsCount() {
+        $count = $this->_client->count();
+
+        $articoliList = $this->_client->listAll();
+
+        $this->assertEquals($count, sizeof($articoliList));
     }
 
     /**

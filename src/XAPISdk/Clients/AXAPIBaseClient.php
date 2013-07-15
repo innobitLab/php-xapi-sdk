@@ -6,8 +6,6 @@
  * mail: info@innobit.it
  */
 
-
-
 namespace XAPISdk\Clients;
 
 use Httpful\Request;
@@ -60,6 +58,18 @@ abstract class AXAPIBaseClient implements IXAPIClient {
     protected abstract function getResourceName();
 
     protected abstract function getBusinessObjectClassName();
+
+    public function loadAsProxy($id) {
+        $businessObjClassName = $this->getBusinessObjectClassName();
+
+        /** @var \XAPISdk\Data\BusinessObjects\IBusinessObject $res */
+        $res = new $businessObjClassName($this);
+
+        $res->setId($id);
+        $res->setLazy(true);
+
+        return $res;
+    }
 
     public function get($id) {
         $jsonObj = $this->getAsJsonObj($id);

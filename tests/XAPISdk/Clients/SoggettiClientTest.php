@@ -72,12 +72,22 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
     /**
      * @depends test_gettingSoggetto_shouldReturnObjectWithSameProperties
      */
-    public function test_listingSoggetti_shouldReturnObjectsCountAsCount() {
+    public function test_listingSoggetti_shouldReturnObjectsCountAsCount($soggettoGetted) {
         $count = $this->_client->count();
 
         $soggettiList = $this->_client->listAll();
 
         $this->assertEquals($count, sizeof($soggettiList));
+    }
+
+    /**
+     * @depends test_gettingSoggetto_shouldReturnObjectWithSameProperties
+     */
+    public function test_listingSoggettiWithFilter_shouldReturnOneObject($soggettoGetted) {
+
+        $soggettiList = $this->_client->listAll(array('nome' => $soggettoGetted->getNome()));
+
+        $this->assertEquals(1, sizeof($soggettiList));
     }
 
     /**

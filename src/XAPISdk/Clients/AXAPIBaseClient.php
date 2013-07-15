@@ -329,7 +329,7 @@ abstract class AXAPIBaseClient implements IXAPIClient {
     }
 
     protected function calculateQueryParamForKvpFilter(array $kvpFilter) {
-        $res = self::PARAM_QUERY__NAME . '=';
+        $res = '';
         $sep = '';
 
         foreach($kvpFilter as $k => $v) {

@@ -351,7 +351,12 @@ abstract class AXAPIBaseClient implements IXAPIClient {
     }
 
     protected function calculateResourcePath($resourceName, $resourceId = null) {
-        return $resourceName . '/' . $resourceId;
+        $res = $resourceName;
+
+        if ($resourceId != null)
+            $res .= '/' . $resourceId;
+
+        return $res;
     }
 
     protected function logDebug($message) {

@@ -32,6 +32,7 @@ class ListinoPrezzo extends ABaseBusinessObject {
     protected $_prezzo;
     protected $_prezzoIvato;
     protected $_aliquotaIva;
+    protected $_prezzoConsigliato;
     protected $_proteggiListino;
 
     protected $_listino;
@@ -213,6 +214,14 @@ class ListinoPrezzo extends ABaseBusinessObject {
         return $this->_valuta;
     }
 
+    public function setPrezzoConsigliato($prezzoConsigliato) {
+        $this->_prezzoConsigliato = $prezzoConsigliato;
+    }
+
+    public function getPrezzoConsigliato() {
+        return $this->_prezzoConsigliato;
+    }
+
     // endregion
 
     // region -- METHODS --
@@ -238,7 +247,8 @@ class ListinoPrezzo extends ABaseBusinessObject {
             'articolo' => $this->serializedField($this->_articolo),
             'valuta' => $this->serializedField($this->_valuta),
             'listinoRif' => $this->serializedField($this->_listinoRif),
-            'unitaMisura' => $this->serializedField($this->_unitaMisura));
+            'unitaMisura' => $this->serializedField($this->_unitaMisura),
+            'prezzoConsigliato' => $this->serializedField($this->_prezzoConsigliato));
 
         return json_encode($toSerialize);
     }
@@ -289,6 +299,9 @@ class ListinoPrezzo extends ABaseBusinessObject {
 
         if (isset($jsonObj->proteggiListino))
             $this->setProteggiListino($jsonObj->proteggiListino);
+
+        if (isset($jsonObj->prezzoConsigliato))
+            $this->setPrezzoConsigliato($jsonObj->prezzoConsigliato);
 
         if (isset($jsonObj->listino))
             $this->setListino(Listino::fromJson($jsonObj->listino, $this->_xapiClient));

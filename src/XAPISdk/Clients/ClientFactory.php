@@ -19,14 +19,18 @@ use XAPISdk\Data\BusinessObjects\CausaleMagazzino;
 use XAPISdk\Data\BusinessObjects\Comune;
 use XAPISdk\Data\BusinessObjects\Contatto;
 use XAPISdk\Data\BusinessObjects\Deposito;
+use XAPISdk\Data\BusinessObjects\Divisione;
+use XAPISdk\Data\BusinessObjects\DocumentoTestata;
 use XAPISdk\Data\BusinessObjects\Imballo;
 use XAPISdk\Data\BusinessObjects\Iva;
 use XAPISdk\Data\BusinessObjects\Listino;
 use XAPISdk\Data\BusinessObjects\ListinoPrezzo;
 use XAPISdk\Data\BusinessObjects\Marca;
 use XAPISdk\Data\BusinessObjects\ModalitaPagamento;
+use XAPISdk\Data\BusinessObjects\ModalitaTrasporto;
 use XAPISdk\Data\BusinessObjects\NaturaGiuridica;
 use XAPISdk\Data\BusinessObjects\Nazione;
+use XAPISdk\Data\BusinessObjects\Porto;
 use XAPISdk\Data\BusinessObjects\Provincia;
 use XAPISdk\Data\BusinessObjects\Rapporto;
 use XAPISdk\Data\BusinessObjects\Regione;
@@ -39,6 +43,7 @@ use XAPISdk\Data\BusinessObjects\TipoSede;
 use XAPISdk\Data\BusinessObjects\TipoSoggetto;
 use XAPISdk\Data\BusinessObjects\UnitaMisura;
 use XAPISdk\Data\BusinessObjects\Valuta;
+use XAPISdk\Data\BusinessObjects\Vettore;
 
 class ClientFactory {
 
@@ -150,6 +155,21 @@ class ClientFactory {
 
             case TipoDocumento::CLASS_NAME:
                 return $this->instantiateClient(TipiDocumentoClient::CLASS_NAME);
+
+            case Divisione::CLASS_NAME:
+                return $this->instantiateClient(DivisioniClient::CLASS_NAME);
+
+            case DocumentoTestata::CLASS_NAME:
+                return $this->instantiateClient(DocumentiTestataClient::CLASS_NAME);
+
+            case ModalitaTrasporto::CLASS_NAME:
+                return $this->instantiateClient(ModalitaTrasportoClient::CLASS_NAME);
+
+            case Porto::CLASS_NAME:
+                return $this->instantiateClient(PortiClient::CLASS_NAME);
+
+            case Vettore::CLASS_NAME:
+                return $this->instantiateClient(VettoriClient::CLASS_NAME);
 
             default:
                 throw new \Exception('Cannot instantiace client businessObjectType [' . $businessObjectType . ']');

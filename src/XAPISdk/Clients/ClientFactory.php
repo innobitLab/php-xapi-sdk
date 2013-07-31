@@ -14,6 +14,8 @@ use XAPISdk\Data\BusinessObjects\Agente;
 use XAPISdk\Data\BusinessObjects\Articolo;
 use XAPISdk\Data\BusinessObjects\Banca;
 use XAPISdk\Data\BusinessObjects\CategoriaMerceologica;
+use XAPISdk\Data\BusinessObjects\CausaleContabile;
+use XAPISdk\Data\BusinessObjects\CausaleMagazzino;
 use XAPISdk\Data\BusinessObjects\Comune;
 use XAPISdk\Data\BusinessObjects\Contatto;
 use XAPISdk\Data\BusinessObjects\Deposito;
@@ -31,6 +33,8 @@ use XAPISdk\Data\BusinessObjects\Regione;
 use XAPISdk\Data\BusinessObjects\Sede;
 use XAPISdk\Data\BusinessObjects\Soggetto;
 use XAPISdk\Data\BusinessObjects\TipoArticolo;
+use XAPISdk\Data\BusinessObjects\TipoCausale;
+use XAPISdk\Data\BusinessObjects\TipoDocumento;
 use XAPISdk\Data\BusinessObjects\TipoSede;
 use XAPISdk\Data\BusinessObjects\TipoSoggetto;
 use XAPISdk\Data\BusinessObjects\UnitaMisura;
@@ -134,6 +138,18 @@ class ClientFactory {
 
             case Regione::CLASS_NAME:
                 return $this->instantiateClient(RegioniClient::CLASS_NAME);
+
+            case CausaleContabile::CLASS_NAME:
+                return $this->instantiateClient(CausaliContabileClient::CLASS_NAME);
+
+            case CausaleMagazzino::CLASS_NAME:
+                return $this->instantiateClient(CausaliMagazzinoClient::CLASS_NAME);
+
+            case TipoCausale::CLASS_NAME:
+                return $this->instantiateClient(TipiCausaleClient::CLASS_NAME);
+
+            case TipoDocumento::CLASS_NAME:
+                return $this->instantiateClient(TipiDocumentoClient::CLASS_NAME);
 
             default:
                 throw new \Exception('Cannot instantiace client businessObjectType [' . $businessObjectType . ']');

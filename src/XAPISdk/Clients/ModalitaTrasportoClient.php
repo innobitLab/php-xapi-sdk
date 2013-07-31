@@ -8,8 +8,6 @@
 
 namespace XAPISdk\Clients;
 
-use XAPISdk\Data\BusinessObjects\Divisione;
-use XAPISdk\Data\BusinessObjects\DocumentoTestata;
 use XAPISdk\Data\BusinessObjects\ModalitaTrasporto;
 
 class ModalitaTrasportoClient extends AXAPIBaseClient {

@@ -8,7 +8,6 @@
 
 namespace XAPISdk\Clients;
 
-use XAPISdk\Data\BusinessObjects\Divisione;
 use XAPISdk\Data\BusinessObjects\DocumentoTestata;
 
 class DocumentiTestataClient extends AXAPIBaseClient {

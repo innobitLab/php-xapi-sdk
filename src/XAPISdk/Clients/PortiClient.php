@@ -8,9 +8,6 @@
 
 namespace XAPISdk\Clients;
 
-use XAPISdk\Data\BusinessObjects\Divisione;
-use XAPISdk\Data\BusinessObjects\DocumentoTestata;
-use XAPISdk\Data\BusinessObjects\ModalitaTrasporto;
 use XAPISdk\Data\BusinessObjects\Porto;
 
 class PortiClient extends AXAPIBaseClient {

@@ -247,7 +247,8 @@ class DocumentoDettaglio extends ABaseBusinessObject {
             'moltiplicatore' => $this->serializedField($this->_moltiplicatore),
             'articolo' => $this->serializedField($this->_articolo),
             'unitaMisura' => $this->serializedField($this->_unitaMisura),
-            'iva' => $this->serializedField($this->_iva));
+            'iva' => $this->serializedField($this->_iva),
+            'documentoTestata' => $this->serializedField($this->_documentoTestata));
 
         return json_encode($toSerialize);
     }

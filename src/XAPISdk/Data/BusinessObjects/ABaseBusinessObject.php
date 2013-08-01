@@ -192,7 +192,7 @@ abstract class ABaseBusinessObject implements IBusinessObject {
             return $fieldValue->getId();
 
         if ($fieldValue instanceof \DateTime)
-            return $this->parseDate($fieldValue);
+            return $this->formatDate($fieldValue);
 
         return $fieldValue;
     }

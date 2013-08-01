@@ -226,9 +226,7 @@ class DocumentoDettaglio extends ABaseBusinessObject {
     // region -- METHODS --
 
     public function toJson() {
-        $toSerialize = array('nome' => $this->serializedField($this->_nome),
-            'codice' => $this->serializedField($this->_codice),
-            'progressivo' => $this->serializedField($this->_progressivo),
+        $toSerialize = array('progressivo' => $this->serializedField($this->_progressivo),
             'codiceArticolo' => $this->serializedField($this->_codiceArticolo),
             'codiceArticoloEtichetta' => $this->serializedField($this->_codiceArticoloEtichetta),
             'codiceArticoloFornitore' => $this->serializedField($this->_codiceArticoloFornitore),

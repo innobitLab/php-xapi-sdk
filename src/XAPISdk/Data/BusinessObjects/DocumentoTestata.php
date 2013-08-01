@@ -585,9 +585,7 @@ class DocumentoTestata extends ABaseBusinessObject {
     // region -- METHODS --
 
     public function toJson() {
-        $toSerialize = array('nome' => $this->serializedField($this->_nome),
-            'simbolo' => $this->serializedField($this->_simbolo),
-            'anno' => $this->serializedField($this->_anno),
+        $toSerialize = array('anno' => $this->serializedField($this->_anno),
             'cambioValuta' => $this->serializedField($this->_cambioValuta),
             'dataDocumento' => $this->serializedField($this->_dataDocumento),
             'numeroDocumento' => $this->serializedField($this->_numeroDocumento),

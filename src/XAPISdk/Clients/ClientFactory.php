@@ -173,7 +173,7 @@ class ClientFactory {
                 return $this->instantiateClient(VettoriClient::CLASS_NAME);
 
             case DocumentoDettaglio::CLASS_NAME:
-                return $this->instantiateClient(DocumentoDettaglio::CLASS_NAME);
+                return $this->instantiateClient(DocumentiDettaglioClient::CLASS_NAME);
 
             default:
                 throw new \Exception('Cannot instantiace client businessObjectType [' . $businessObjectType . ']');

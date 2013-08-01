@@ -122,8 +122,12 @@ abstract class ABaseBusinessObject implements IBusinessObject {
         return !empty($this->_id);
     }
 
-    private function parseDate($value) {
+    protected function parseDate($value) {
         return \DateTime::createFromFormat(self::DATE_TIME_FORMAT, $value);
+    }
+
+    protected function formatDate(\DateTime $date) {
+        return $date->format(self::DATE_TIME_FORMAT);
     }
 
     public static function fromJson($jsonObj, IXAPIClient $client = null) {
@@ -186,6 +190,9 @@ abstract class ABaseBusinessObject implements IBusinessObject {
     protected function serializedField($fieldValue) {
         if ($fieldValue instanceof IBusinessObject)
             return $fieldValue->getId();
+
+        if ($fieldValue instanceof \DateTime)
+            return $this->parseDate($fieldValue);
 
         return $fieldValue;
     }

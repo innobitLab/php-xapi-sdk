@@ -654,7 +654,7 @@ class DocumentoTestata extends ABaseBusinessObject {
             $this->setCambioValuta($jsonObj->cambioValuta);
 
         if (isset($jsonObj->dataDocumento))
-            $this->setDataDocumento($jsonObj->dataDocumento);
+            $this->setDataDocumento($this->parseDate($jsonObj->dataDocumento));
 
         if (isset($jsonObj->numeroDocumento))
             $this->setNumeroDocumento($jsonObj->numeroDocumento);
@@ -720,7 +720,7 @@ class DocumentoTestata extends ABaseBusinessObject {
             $this->setNumeroProtocollo($jsonObj->numeroProtocollo);
 
         if (isset($jsonObj->dataProtocollo))
-            $this->setDataProtocollo($jsonObj->dataProtocollo);
+            $this->setDataProtocollo($this->parseDate($jsonObj->dataProtocollo));
 
         if (isset($jsonObj->protocolloAssegnato))
             $this->setProtocolloAssegnato($jsonObj->protocolloAssegnato);
@@ -732,7 +732,7 @@ class DocumentoTestata extends ABaseBusinessObject {
             $this->setNoteImballo($jsonObj->noteImballo);
 
         if (isset($jsonObj->dataConsegna))
-            $this->setDataConsegna($jsonObj->dataConsegna);
+            $this->setDataConsegna($this->parseDate($jsonObj->dataConsegna));
 
         if (isset($jsonObj->riferimentoDocumento))
             $this->setRiferimentoDocumento($jsonObj->riferimentoDocumento);

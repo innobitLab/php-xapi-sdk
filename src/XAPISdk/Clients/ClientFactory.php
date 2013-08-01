@@ -20,6 +20,7 @@ use XAPISdk\Data\BusinessObjects\Comune;
 use XAPISdk\Data\BusinessObjects\Contatto;
 use XAPISdk\Data\BusinessObjects\Deposito;
 use XAPISdk\Data\BusinessObjects\Divisione;
+use XAPISdk\Data\BusinessObjects\DocumentoDettaglio;
 use XAPISdk\Data\BusinessObjects\DocumentoTestata;
 use XAPISdk\Data\BusinessObjects\Imballo;
 use XAPISdk\Data\BusinessObjects\Iva;
@@ -170,6 +171,9 @@ class ClientFactory {
 
             case Vettore::CLASS_NAME:
                 return $this->instantiateClient(VettoriClient::CLASS_NAME);
+
+            case DocumentoDettaglio::CLASS_NAME:
+                return $this->instantiateClient(DocumentoDettaglio::CLASS_NAME);
 
             default:
                 throw new \Exception('Cannot instantiace client businessObjectType [' . $businessObjectType . ']');

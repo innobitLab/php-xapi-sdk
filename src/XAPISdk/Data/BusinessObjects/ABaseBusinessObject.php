@@ -142,8 +142,6 @@ abstract class ABaseBusinessObject implements IBusinessObject {
 
     protected abstract function setFieldsFromJsonObj($jsonObj);
 
-    public abstract function toJson();
-
     protected function retriveDataFromXAPI() {
         $xapiConf = $this->_xapiClient->getXapiSdkConfiguration();
         $factory = new ClientFactory($xapiConf);

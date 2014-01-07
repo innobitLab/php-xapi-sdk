@@ -331,9 +331,11 @@ abstract class AXAPIBaseClient implements IXAPIClient {
         $sep = '?';
 
         foreach($params as $pKey => $pValue) {
-            $uri .= $sep . $pKey . '=' . $pValue;
+            $uri .= $sep . urlencode($pKey) . '=' . urlencode($pValue);
             $sep = '&';
         }
+
+        print($uri . "\n");
 
         return $uri;
     }
@@ -343,6 +345,12 @@ abstract class AXAPIBaseClient implements IXAPIClient {
         $sep = '';
 
         foreach($kvpFilter as $k => $v) {
+            $k = StringUtil::escapeCharInString($k, self::PARAM_QUERY__FIELD_SEP);
+            $k = StringUtil::escapeCharInString($k, self::PARAM_QUERY__FILTER_SEP);
+
+            $v = StringUtil::escapeCharInString($v, self::PARAM_QUERY__FIELD_SEP);
+            $v = StringUtil::escapeCharInString($v, self::PARAM_QUERY__FILTER_SEP);
+
             $res .= $sep . $k . self::PARAM_QUERY__FIELD_SEP . $v;
             $sep = self::PARAM_QUERY__FILTER_SEP;
         }

@@ -28,7 +28,7 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
 
     public function test_addingSoggetto_shouldReturnObjectWithSameProperties() {
         $soggettoToAdd = new \XAPISdk\Data\BusinessObjects\Soggetto();
-        $soggettoToAdd->setRagioneSociale('Innobit s.r.l. & Co.');
+        $soggettoToAdd->setRagioneSociale('Innobit, TeamMosaico');
         $soggettoToAdd->setNome('Gabriele');
         $soggettoToAdd->setCognome('Tondi');
         $soggettoToAdd->setPartitaIva('IT123456789');
@@ -49,6 +49,15 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($soggettoToAdd->getSoggettoInMora(), $soggettoAdded->getSoggettoInMora());
 
         return $soggettoAdded;
+    }
+
+    /**
+     * @depends test_addingSoggetto_shouldReturnObjectWithSameProperties
+     */
+    public function test_listingSoggetto_escapeChar(\XAPISdk\Data\BusinessObjects\Soggetto $soggettoAdded) {
+        $soggettiByRagioneSociale = $this->_client->listAll(array('ragioneSociale' => 'Innobit, TeamMosaico'));
+
+        $this->assertEquals(1, sizeof($soggettiByRagioneSociale));
     }
 
     /**

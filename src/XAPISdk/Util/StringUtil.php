@@ -35,6 +35,10 @@ class StringUtil {
         return (substr($haystack, -$length) === $needle);
     }
 
+    public static function escapeCharInString($string, $charToEscape) {
+        return str_replace($charToEscape, '\\' . $charToEscape, $string);
+    }
+
     // endregion
 
 }

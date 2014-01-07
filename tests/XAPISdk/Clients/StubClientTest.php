@@ -94,7 +94,7 @@ class StubClientTest extends PHPUnit_Framework_TestCase {
         $resourcePath = $client->calculateResourcePath('Stub');
         $params = array('q' => 'campo1|valore1', 'from' => 10, 'limit' => 100);
 
-        $expected = Bootstrap::XAPI_URI . '/Stub?q=campo1|valore1&from=10&limit=100';
+        $expected = Bootstrap::XAPI_URI . '/Stub?q=campo1%7Cvalore1&from=10&limit=100';
 
         $this->assertEquals($expected, $client->calculateUriForResourcePath($resourcePath, $params));
     }

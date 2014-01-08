@@ -335,8 +335,6 @@ abstract class AXAPIBaseClient implements IXAPIClient {
             $sep = '&';
         }
 
-        print($uri . "\n");
-
         return $uri;
     }
 

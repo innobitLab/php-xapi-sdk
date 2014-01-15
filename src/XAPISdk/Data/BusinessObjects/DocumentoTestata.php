@@ -51,6 +51,7 @@ class DocumentoTestata extends ABaseBusinessObject {
     protected $_riferimentoDocumento;
     protected $_sequenziale;
     protected $_terminiConsegna;
+    protected $_jolly;
 
     protected $_valuta;
     protected $_causaleMagazzino;
@@ -338,6 +339,14 @@ class DocumentoTestata extends ABaseBusinessObject {
         return $this->_totale;
     }
 
+    public function setJolly($jolly) {
+        $this->_jolly = $jolly;
+    }
+
+    public function getJolly() {
+        return $this->_jolly;
+    }
+
     // sub business objects
 
     public function setAgente($agente) {
@@ -617,6 +626,7 @@ class DocumentoTestata extends ABaseBusinessObject {
             'riferimentoDocumento' => $this->serializedField($this->_riferimentoDocumento),
             'sequenziale' => $this->serializedField($this->_sequenziale),
             'terminiConsegna' => $this->serializedField($this->_terminiConsegna),
+            'jolly' => $this->serializedField($this->_jolly),
             'valuta' => $this->serializedField($this->_valuta),
             'causaleMagazzino' => $this->serializedField($this->_causaleMagazzino),
             'causaleMagazzino2' => $this->serializedField($this->_causaleMagazzino2),
@@ -740,6 +750,9 @@ class DocumentoTestata extends ABaseBusinessObject {
 
         if (isset($jsonObj->terminiConsegna))
             $this->setTerminiConsegna($jsonObj->terminiConsegna);
+
+        if (isset($jsonObj->jolly))
+            $this->setJolly($jsonObj->jolly);
 
         if (isset($jsonObj->valuta))
             $this->setValuta(Valuta::fromJson($jsonObj->valuta, $this->_xapiClient));

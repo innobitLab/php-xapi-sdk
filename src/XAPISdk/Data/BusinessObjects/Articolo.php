@@ -78,7 +78,9 @@ class Articolo extends ABaseBusinessObject {
     }
 
     public function getCategoriaMerceologica() {
-        return $this->_categoriaMerceologica;
+        $res = $this->_categoriaMerceologica;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setClasseRiordino($classeRiordino) {
@@ -182,7 +184,9 @@ class Articolo extends ABaseBusinessObject {
     }
 
     public function getImballo() {
-        return $this->_imballo;
+        $res = $this->_imballo;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setIva($iva) {
@@ -190,7 +194,9 @@ class Articolo extends ABaseBusinessObject {
     }
 
     public function getIva() {
-        return $this->_iva;
+        $res = $this->_iva;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setListiniPrezzo($listiniPrezzo) {
@@ -198,7 +204,9 @@ class Articolo extends ABaseBusinessObject {
     }
 
     public function getListiniPrezzo() {
-        return $this->_listiniPrezzo;
+        $res = $this->_listiniPrezzo;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setMarca($marca) {
@@ -206,7 +214,9 @@ class Articolo extends ABaseBusinessObject {
     }
 
     public function getMarca() {
-        return $this->_marca;
+        $res = $this->_marca;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setMinimoMagazzino($minimoMagazzino) {
@@ -270,7 +280,9 @@ class Articolo extends ABaseBusinessObject {
     }
 
     public function getTipoArticolo() {
-        return $this->_tipoArticolo;
+        $res = $this->_tipoArticolo;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setUnitaMisuraCarico($unitaMisuraCarico) {
@@ -278,7 +290,9 @@ class Articolo extends ABaseBusinessObject {
     }
 
     public function getUnitaMisuraCarico() {
-        return $this->_unitaMisuraCarico;
+        $res = $this->_unitaMisuraCarico;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setUnitaMisuraMagazzino($unitaMisuraMagazzino) {
@@ -286,7 +300,9 @@ class Articolo extends ABaseBusinessObject {
     }
 
     public function getUnitaMisuraMagazzino() {
-        return $this->_unitaMisuraMagazzino;
+        $res = $this->_unitaMisuraMagazzino;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setUnitaMisuraScarico($unitaMisuraScarico) {
@@ -294,7 +310,9 @@ class Articolo extends ABaseBusinessObject {
     }
 
     public function getUnitaMisuraScarico() {
-        return $this->_unitaMisuraScarico;
+        $res = $this->_unitaMisuraScarico;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setValidita($validita) {
@@ -318,7 +336,9 @@ class Articolo extends ABaseBusinessObject {
     }
 
     public function getGiacenzePerDeposito() {
-        return $this->_giacenzePerDeposito;
+        $res = $this->_giacenzePerDeposito;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     // endregion

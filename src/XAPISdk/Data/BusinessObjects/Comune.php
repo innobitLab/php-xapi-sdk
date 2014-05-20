@@ -66,7 +66,9 @@ class Comune extends ABaseBusinessObject {
     }
 
     public function getProvincia() {
-        return $this->_provincia;
+        $res = $this->_provincia;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     // endregion

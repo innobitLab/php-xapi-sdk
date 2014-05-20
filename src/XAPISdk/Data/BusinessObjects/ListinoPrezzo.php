@@ -51,7 +51,9 @@ class ListinoPrezzo extends ABaseBusinessObject {
     }
 
     public function getArticolo() {
-        return $this->_articolo;
+        $res = $this->_articolo;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setAliquotaIva($aliquotaIva) {
@@ -91,7 +93,9 @@ class ListinoPrezzo extends ABaseBusinessObject {
     }
 
     public function getListino() {
-        return $this->_listino;
+        $res = $this->_listino;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setListinoRif($listinoRif) {
@@ -99,7 +103,9 @@ class ListinoPrezzo extends ABaseBusinessObject {
     }
 
     public function getListinoRif() {
-        return $this->_listinoRif;
+        $res = $this->_listinoRif;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setPrezzo($prezzo) {
@@ -195,7 +201,9 @@ class ListinoPrezzo extends ABaseBusinessObject {
     }
 
     public function getSoggetto() {
-        return $this->_soggetto;
+        $res = $this->_soggetto;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setUnitaMisura($unitaMisura) {
@@ -203,7 +211,9 @@ class ListinoPrezzo extends ABaseBusinessObject {
     }
 
     public function getUnitaMisura() {
-        return $this->_unitaMisura;
+        $res = $this->_unitaMisura;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setValuta($valuta) {
@@ -211,7 +221,9 @@ class ListinoPrezzo extends ABaseBusinessObject {
     }
 
     public function getValuta() {
-        return $this->_valuta;
+        $res = $this->_valuta;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setPrezzoConsigliato($prezzoConsigliato) {

@@ -31,7 +31,9 @@ class GiacenzaPerDeposito extends ABaseBusinessObject {
     }
 
     public function getArticolo() {
-        return $this->_articolo;
+        $res = $this->_articolo;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setDeposito($deposito) {
@@ -39,7 +41,9 @@ class GiacenzaPerDeposito extends ABaseBusinessObject {
     }
 
     public function getDeposito() {
-        return $this->_deposito;
+        $res = $this->_deposito;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setGiacenza($giacenza) {
@@ -47,7 +51,9 @@ class GiacenzaPerDeposito extends ABaseBusinessObject {
     }
 
     public function getGiacenza() {
-        return $this->_giacenza;
+        $res = $this->_giacenza;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     // endregion

@@ -40,7 +40,9 @@ class Provincia extends ABaseBusinessObject {
     }
 
     public function getRegione() {
-        return $this->_regione;
+        $res = $this->_regione;
+        $res = $this->delazyField($res);
+        return $res;
     }
 
     public function setSigla($sigla) {

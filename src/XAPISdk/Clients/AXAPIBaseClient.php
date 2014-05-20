@@ -29,7 +29,7 @@ abstract class AXAPIBaseClient implements IXAPIClient {
 
     const PARAM_OFFSET__NAME = 'offset';
     const PARAM_LIMIT__NAME = 'limit';
-    const PARAM_LIMIT__MAX_VALUE = 500;
+    const PARAM_LIMIT__MAX_VALUE = 100;
 
     const CLASS_NAME = __CLASS__;
 

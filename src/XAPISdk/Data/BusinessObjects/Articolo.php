@@ -51,6 +51,7 @@ class Articolo extends ABaseBusinessObject {
     protected $_marca;
     protected $_iva;
     protected $_listiniPrezzo;
+    protected $_giacenzePerDeposito;
 
     // endregion
 
@@ -312,6 +313,14 @@ class Articolo extends ABaseBusinessObject {
         return $this->_volumeImballo;
     }
 
+    public function setGiacenzePerDeposito($giacenzePerDeposito) {
+        $this->_giacenzePerDeposito = $giacenzePerDeposito;
+    }
+
+    public function getGiacenzePerDeposito() {
+        return $this->_giacenzePerDeposito;
+    }
+
     // endregion
 
     // region -- METHODS --
@@ -455,6 +464,16 @@ class Articolo extends ABaseBusinessObject {
             }
 
             $this->setListiniPrezzo($listini);
+        }
+
+        if (isset($jsonObj->giacenzePerDeposito) && is_array($jsonObj->giacenzePerDeposito)) {
+            $giacenze = array();
+
+            foreach($jsonObj->giacenzePerDeposito as $giacObj) {
+                $giacenze[] = GiacenzaPerDeposito::fromJson($giacObj, $this->_xapiClient);
+            }
+
+            $this->setGiacenzePerDeposito($giacenze);
         }
     }
 

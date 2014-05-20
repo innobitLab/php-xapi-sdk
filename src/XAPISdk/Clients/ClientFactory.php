@@ -22,6 +22,7 @@ use XAPISdk\Data\BusinessObjects\Deposito;
 use XAPISdk\Data\BusinessObjects\Divisione;
 use XAPISdk\Data\BusinessObjects\DocumentoDettaglio;
 use XAPISdk\Data\BusinessObjects\DocumentoTestata;
+use XAPISdk\Data\BusinessObjects\GiacenzaPerDeposito;
 use XAPISdk\Data\BusinessObjects\Imballo;
 use XAPISdk\Data\BusinessObjects\Iva;
 use XAPISdk\Data\BusinessObjects\Listino;
@@ -175,8 +176,11 @@ class ClientFactory {
             case DocumentoDettaglio::CLASS_NAME:
                 return $this->instantiateClient(DocumentiDettaglioClient::CLASS_NAME);
 
+            case GiacenzaPerDeposito::CLASS_NAME:
+                return $this->instantiateClient(GiacenzePerDepositoClient::CLASS_NAME);
+
             default:
-                throw new \Exception('Cannot instantiace client businessObjectType [' . $businessObjectType . ']');
+                throw new \Exception('Cannot instantiate client businessObjectType [' . $businessObjectType . ']');
 
         }
     }

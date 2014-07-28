@@ -52,6 +52,7 @@ class Articolo extends ABaseBusinessObject {
     protected $_iva;
     protected $_listiniPrezzo;
     protected $_giacenzePerDeposito;
+    protected $_impegnatoArticolo;
 
     // endregion
 
@@ -341,6 +342,16 @@ class Articolo extends ABaseBusinessObject {
         return $res;
     }
 
+    public function setImpegnatoArticolo($impegnatoArticolo) {
+        $this->_impegnatoArticolo = $impegnatoArticolo;
+    }
+
+    public function getImpegnatoArticolo() {
+        $res = $this->_impegnatoArticolo;
+        $res = $this->delazyField($res);
+        return $res;
+    }
+
     // endregion
 
     // region -- METHODS --
@@ -475,6 +486,9 @@ class Articolo extends ABaseBusinessObject {
 
         if (isset($jsonObj->iva))
             $this->setIva(Iva::fromJson($jsonObj->iva, $this->_xapiClient));
+
+        if (isset($jsonObj->impegnatoArticolo))
+            $this->setImpegnatoArticolo(ImpegnatoArticolo::fromJson($jsonObj->impegnatoArticolo, $this->_xapiClient));
 
         if (isset($jsonObj->listiniPrezzo) && is_array($jsonObj->listiniPrezzo)) {
             $listini = array();

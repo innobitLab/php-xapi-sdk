@@ -24,6 +24,7 @@ use XAPISdk\Data\BusinessObjects\DocumentoDettaglio;
 use XAPISdk\Data\BusinessObjects\DocumentoTestata;
 use XAPISdk\Data\BusinessObjects\GiacenzaPerDeposito;
 use XAPISdk\Data\BusinessObjects\Imballo;
+use XAPISdk\Data\BusinessObjects\ImpegnatoArticolo;
 use XAPISdk\Data\BusinessObjects\Iva;
 use XAPISdk\Data\BusinessObjects\Listino;
 use XAPISdk\Data\BusinessObjects\ListinoPrezzo;
@@ -178,6 +179,9 @@ class ClientFactory {
 
             case GiacenzaPerDeposito::CLASS_NAME:
                 return $this->instantiateClient(GiacenzePerDepositoClient::CLASS_NAME);
+
+            case ImpegnatoArticolo::CLASS_NAME:
+                return $this->instantiateClient(ImpegnatiArticoloClient::CLASS_NAME);
 
             default:
                 throw new \Exception('Cannot instantiate client businessObjectType [' . $businessObjectType . ']');

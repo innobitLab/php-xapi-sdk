@@ -40,9 +40,7 @@ class ImpegnatoArticolo extends ABaseBusinessObject {
     }
 
     public function getImpegnato() {
-        $res = $this->_impegnato;
-        $res = $this->delazyField($res);
-        return $res;
+        return $this->_impegnato;
     }
 
     // endregion

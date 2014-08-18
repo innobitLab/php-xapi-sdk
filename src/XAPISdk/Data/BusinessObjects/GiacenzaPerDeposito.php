@@ -51,9 +51,7 @@ class GiacenzaPerDeposito extends ABaseBusinessObject {
     }
 
     public function getGiacenza() {
-        $res = $this->_giacenza;
-        $res = $this->delazyField($res);
-        return $res;
+        return $this->_giacenza;
     }
 
     // endregion

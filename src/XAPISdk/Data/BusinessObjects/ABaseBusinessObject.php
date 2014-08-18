@@ -159,7 +159,7 @@ abstract class ABaseBusinessObject implements IBusinessObject {
 
     protected function delazyField($fieldValue) {
         if ($this->_xapiClient == null)
-            return;
+            return null;
 
         if ($fieldValue instanceof ABaseBusinessObject) {
             return $this->delazyFieldSingle($fieldValue);
@@ -168,6 +168,8 @@ abstract class ABaseBusinessObject implements IBusinessObject {
         if (is_array($fieldValue)) {
             return $this->delazyFieldCollection($fieldValue);
         }
+
+        return $fieldValue;
     }
 
     private function delazyFieldSingle(ABaseBusinessObject $fieldValue) {

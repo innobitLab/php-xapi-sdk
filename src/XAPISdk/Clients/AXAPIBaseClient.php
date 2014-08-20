@@ -346,6 +346,7 @@ abstract class AXAPIBaseClient implements IXAPIClient {
             $k = StringUtil::escapeCharInString($k, self::PARAM_QUERY__FIELD_SEP);
             $k = StringUtil::escapeCharInString($k, self::PARAM_QUERY__FILTER_SEP);
 
+            $v = urlencode($v);
             $v = StringUtil::escapeCharInString($v, self::PARAM_QUERY__FIELD_SEP);
             $v = StringUtil::escapeCharInString($v, self::PARAM_QUERY__FILTER_SEP);
 

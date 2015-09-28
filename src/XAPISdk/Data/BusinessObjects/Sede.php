@@ -224,6 +224,9 @@ class Sede extends ABaseBusinessObject {
         if (isset($jsonObj->cellulare2))
             $this->setCellulare2($jsonObj->cellulare2);
 
+        if (isset($jsonObj->fax))
+            $this->setFax($jsonObj->fax);
+
         if (isset($jsonObj->soggetto))
             $this->setSoggetto(Soggetto::fromJson($jsonObj->soggetto, $this->_xapiClient));
 

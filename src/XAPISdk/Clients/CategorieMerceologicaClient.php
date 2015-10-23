@@ -11,7 +11,7 @@ namespace XAPISdk\Clients;
 
 use XAPISdk\Data\BusinessObjects\CategoriaMerceologica;
 
-class CategoriaMerceologicaClient extends AXAPIBaseClient {
+class CategorieMerceologicaClient extends AXAPIBaseClient {
 
     // region -- CONSTANTS --
 

@@ -118,7 +118,7 @@ class ClientFactory {
                 return $this->instantiateClient(ArticoliClient::CLASS_NAME);
 
             case CategoriaMerceologica::CLASS_NAME:
-                return $this->instantiateClient(CategoriaMerceologicaClient::CLASS_NAME);
+                return $this->instantiateClient(CategorieMerceologicaClient::CLASS_NAME);
 
             case Imballo::CLASS_NAME:
                 return $this->instantiateClient(ImballiClient::CLASS_NAME);

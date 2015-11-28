@@ -25,17 +25,15 @@ class AgentiClientTest extends PHPUnit_Framework_TestCase {
         $this->_client = $clientFactory->getClientForBusinessObject(\XAPISdk\Data\BusinessObjects\Agente::CLASS_NAME);
     }
 
-    public function test_AgentiCount_shouldReturnNumber() {
-        $agentiCount = $this->_client->count();
-        $this->assertTrue(is_int($agentiCount));
-        return $agentiCount;
+    /**
+     * @group read
+     */
+    public function test_listingAgenti_shouldReturnObjectsCountAsCount() {
+        $count = $this->_client->count();
+
+        $agentiList = $this->_client->listAll();
+
+        $this->assertEquals($count, sizeof($agentiList));
     }
 
-    /**
-     * @depends test_AgentiCount_shouldReturnNumber
-     */
-    public function test_listAllAgentiElements_shouldCountEqualAgentiCount($agentiCount) {
-        $agentiList = $this->_client->listAll();
-        $this->assertCount($agentiCount,$agentiList);
-    }
 }

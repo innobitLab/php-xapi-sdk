@@ -25,6 +25,20 @@ class CategoriaMerceologicaClientTest extends PHPUnit_Framework_TestCase {
         $this->_client = $clientFactory->getClientForBusinessObject(\XAPISdk\Data\BusinessObjects\CategoriaMerceologica::CLASS_NAME);
     }
 
+    /**
+     * @group read
+     */
+    public function test_listingCategorieMerceologica_shouldReturnObjectsCountAsCount() {
+        $count = $this->_client->count();
+
+        $categorieList = $this->_client->listAll();
+
+        $this->assertEquals($count, sizeof($categorieList));
+    }
+
+    /**
+     * @group create
+     */
     public function test_addingCategoriaMerceologica_shouldReturnObjectWithSameProperties() {
         $categoriaToAdd = new \XAPISdk\Data\BusinessObjects\CategoriaMerceologica();
         $categoriaToAdd->setNome('Category 01');
@@ -38,6 +52,7 @@ class CategoriaMerceologicaClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @depends test_addingCategoriaMerceologica_shouldReturnObjectWithSameProperties
+     * @group read
      */
     public function test_gettingCategoriaMerceologica_shouldReturnObjectWithSameProperties(\XAPISdk\Data\BusinessObjects\CategoriaMerceologica $categoriaAdded) {
         $categoriaGetted = $this->_client->get($categoriaAdded->getId());
@@ -49,17 +64,7 @@ class CategoriaMerceologicaClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @depends test_gettingCategoriaMerceologica_shouldReturnObjectWithSameProperties
-     */
-    public function test_listingCategorieMerceologica_shouldReturnObjectsCountAsCount() {
-        $count = $this->_client->count();
-
-        $categorieList = $this->_client->listAll();
-
-        $this->assertEquals($count, sizeof($categorieList));
-    }
-
-    /**
-     * @depends test_gettingCategoriaMerceologica_shouldReturnObjectWithSameProperties
+     * @group update
      */
     public function test_editingCategoriaMerceologica_shouldReturnObjectWithSameProperties(\XAPISdk\Data\BusinessObjects\CategoriaMerceologica $categoriaGetted) {
         $categoriaToEdit = $categoriaGetted;
@@ -76,6 +81,7 @@ class CategoriaMerceologicaClientTest extends PHPUnit_Framework_TestCase {
     /**
      * @depends test_editingCategoriaMerceologica_shouldReturnObjectWithSameProperties
      * @expectedException \XAPISdk\Clients\ResourceNotFoundException
+     * @group delete
      */
     public function test_deletingCategoriaMerceologica_shouldNotBeFound(\XAPISdk\Data\BusinessObjects\CategoriaMerceologica $categoriaEdited) {
         $this->_client->delete($categoriaEdited->getId());
@@ -85,6 +91,7 @@ class CategoriaMerceologicaClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @expectedException \XAPISdk\Clients\ResourceNotFoundException
+     * @group read
      */
     public function test_gettingCategoriaMerceologicaWithWrongId_shouldThrowException() {
         $categoria = $this->_client->get('YOU_CANNOT_FIND_ME');

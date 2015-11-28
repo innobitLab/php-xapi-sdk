@@ -25,6 +25,20 @@ class ArticoliClientTest extends PHPUnit_Framework_TestCase {
         $this->_client = $clientFactory->getClientForBusinessObject(\XAPISdk\Data\BusinessObjects\Articolo::CLASS_NAME);
     }
 
+    /**
+     * @group read
+     */
+    public function test_listingArticoli_shouldReturnObjectsCountAsCount() {
+        $count = $this->_client->count();
+
+        $articoliList = $this->_client->listAll();
+
+        $this->assertEquals($count, sizeof($articoliList));
+    }
+
+    /**
+     * @group create
+     */
     public function test_addingArticolo_shouldReturnObjectWithSameProperties() {
         $articoloToAdd = new \XAPISdk\Data\BusinessObjects\Articolo();
 
@@ -98,6 +112,7 @@ class ArticoliClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @depends test_addingArticolo_shouldReturnObjectWithSameProperties
+     * @group read
      */
     public function test_gettingArticolo_shouldReturnObjectWithSameProperties(\XAPISdk\Data\BusinessObjects\Articolo $articoloAdded) {
         $articoloGetted = $this->_client->get($articoloAdded->getId());
@@ -134,17 +149,7 @@ class ArticoliClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @depends test_gettingArticolo_shouldReturnObjectWithSameProperties
-     */
-    public function test_listingArticoli_shouldReturnObjectsCountAsCount() {
-        $count = $this->_client->count();
-
-        $articoliList = $this->_client->listAll();
-
-        $this->assertEquals($count, sizeof($articoliList));
-    }
-
-    /**
-     * @depends test_gettingArticolo_shouldReturnObjectWithSameProperties
+     * @group update
      */
     public function test_editingArticolo_shouldReturnObjectWithSameProperties(\XAPISdk\Data\BusinessObjects\Articolo $ArticoloGetted) {
         $articoloToEdit = $ArticoloGetted;
@@ -208,6 +213,7 @@ class ArticoliClientTest extends PHPUnit_Framework_TestCase {
     /**
      * @depends test_editingArticolo_shouldReturnObjectWithSameProperties
      * @expectedException \XAPISdk\Clients\ResourceNotFoundException
+     * @group delete
      */
     public function test_deletingArticolo_shouldNotBeFound(\XAPISdk\Data\BusinessObjects\Articolo $articoloEdited) {
         $this->_client->delete($articoloEdited->getId());
@@ -217,6 +223,7 @@ class ArticoliClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @expectedException \XAPISdk\Clients\ResourceNotFoundException
+     * @group read
      */
     public function test_gettingArticoloWithWrongId_shouldThrowException() {
         $articolo = $this->_client->get('YOU_CANNOT_FIND_ME');

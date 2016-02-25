@@ -25,6 +25,20 @@ class MarcheClientTest extends PHPUnit_Framework_TestCase {
         $this->_client = $clientFactory->getClientForBusinessObject(\XAPISdk\Data\BusinessObjects\Marca::CLASS_NAME);
     }
 
+    /**
+     * @group read
+     */
+    public function test_listingMarche_shouldReturnObjectsCountAsCount() {
+        $count = $this->_client->count();
+
+        $marcheList = $this->_client->listAll();
+
+        $this->assertEquals($count, sizeof($marcheList));
+    }
+
+    /**
+     * @group create
+     */
     public function test_addingMarca_shouldReturnObjectWithSameProperties() {
         $marcaToAdd = new \XAPISdk\Data\BusinessObjects\Marca();
         $marcaToAdd->setNome('Apple Computers');
@@ -38,6 +52,7 @@ class MarcheClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @depends test_addingMarca_shouldReturnObjectWithSameProperties
+     * @group read
      */
     public function test_gettingMarca_shouldReturnObjectWithSameProperties(\XAPISdk\Data\BusinessObjects\Marca $marcaAdded) {
         $marcaGetted = $this->_client->get($marcaAdded->getId());
@@ -49,17 +64,7 @@ class MarcheClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @depends test_gettingMarca_shouldReturnObjectWithSameProperties
-     */
-    public function test_listingMarche_shouldReturnObjectsCountAsCount() {
-        $count = $this->_client->count();
-
-        $marcheList = $this->_client->listAll();
-
-        $this->assertEquals($count, sizeof($marcheList));
-    }
-
-    /**
-     * @depends test_gettingMarca_shouldReturnObjectWithSameProperties
+     * @group update
      */
     public function test_editingMarca_shouldReturnObjectWithSameProperties(\XAPISdk\Data\BusinessObjects\Marca $marcaGetted) {
         $marcaToEdit = $marcaGetted;
@@ -76,6 +81,7 @@ class MarcheClientTest extends PHPUnit_Framework_TestCase {
     /**
      * @depends test_editingMarca_shouldReturnObjectWithSameProperties
      * @expectedException \XAPISdk\Clients\ResourceNotFoundException
+     * @group delete
      */
     public function test_deletingMarca_shouldNotBeFound(\XAPISdk\Data\BusinessObjects\Marca $marcaEdited) {
         $this->_client->delete($marcaEdited->getId());
@@ -85,6 +91,7 @@ class MarcheClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @expectedException \XAPISdk\Clients\ResourceNotFoundException
+     * @group read
      */
     public function test_gettingMarcaWithWrongId_shouldThrowException() {
         $marca = $this->_client->get('YOU_CANNOT_FIND_ME');

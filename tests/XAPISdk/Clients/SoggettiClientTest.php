@@ -26,6 +26,20 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
         $this->_client = $clientFactory->getClientForBusinessObject(\XAPISdk\Data\BusinessObjects\Soggetto::CLASS_NAME);
     }
 
+    /**
+     * @group read
+     */
+    public function test_listingSoggetti_shouldReturnObjectsCountAsCount() {
+        $count = $this->_client->count();
+
+        $soggettiList = $this->_client->listAll();
+
+        $this->assertEquals($count, sizeof($soggettiList));
+    }
+
+    /**
+     * @group create
+     */
     public function test_addingSoggetto_shouldReturnObjectWithSameProperties() {
         $soggettoToAdd = new \XAPISdk\Data\BusinessObjects\Soggetto();
         $soggettoToAdd->setRagioneSociale('Innobit, TeamMosaico');
@@ -43,7 +57,6 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($soggettoToAdd->getNome(), $soggettoAdded->getNome());
         $this->assertEquals($soggettoToAdd->getCognome(), $soggettoAdded->getCognome());
         $this->assertEquals($soggettoToAdd->getPartitaIva(), $soggettoAdded->getPartitaIva());
-        $this->assertEquals($soggettoToAdd->getCodiceFiscale(), $soggettoAdded->getCodiceFiscale());
         $this->assertEquals($soggettoToAdd->getSitoWeb(), $soggettoAdded->getSitoWeb());
         $this->assertEquals($soggettoToAdd->getNote(), $soggettoAdded->getNote());
         $this->assertEquals($soggettoToAdd->getSoggettoInMora(), $soggettoAdded->getSoggettoInMora());
@@ -53,6 +66,7 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @depends test_addingSoggetto_shouldReturnObjectWithSameProperties
+     * @group read
      */
     public function test_listingSoggetto_escapeChar(\XAPISdk\Data\BusinessObjects\Soggetto $soggettoAdded) {
         $soggettiByRagioneSociale = $this->_client->listAll(array('ragioneSociale' => 'Innobit, TeamMosaico'));
@@ -62,6 +76,7 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @depends test_addingSoggetto_shouldReturnObjectWithSameProperties
+     * @group read
      */
     public function test_gettingSoggetto_shouldReturnObjectWithSameProperties(\XAPISdk\Data\BusinessObjects\Soggetto $soggettoAdded) {
         $soggettoGetted = $this->_client->get($soggettoAdded->getId());
@@ -80,27 +95,18 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @depends test_gettingSoggetto_shouldReturnObjectWithSameProperties
-     */
-    public function test_listingSoggetti_shouldReturnObjectsCountAsCount($soggettoGetted) {
-        $count = $this->_client->count();
-
-        $soggettiList = $this->_client->listAll();
-
-        $this->assertEquals($count, sizeof($soggettiList));
-    }
-
-    /**
-     * @depends test_gettingSoggetto_shouldReturnObjectWithSameProperties
+     * @group read
      */
     public function test_listingSoggettiWithFilter_shouldReturnOneObject($soggettoGetted) {
 
-        $soggettiList = $this->_client->listAll(array('nome' => $soggettoGetted->getNome()));
+        $soggettiList = $this->_client->listAll(array('codiceFiscale' => $soggettoGetted->getCodiceFiscale()));
 
         $this->assertEquals(1, sizeof($soggettiList));
     }
 
     /**
      * @depends test_gettingSoggetto_shouldReturnObjectWithSameProperties
+     * @group update
      */
     public function test_editingSoggetto_shouldReturnObjectWithSameProperties(\XAPISdk\Data\BusinessObjects\Soggetto $soggettoGetted) {
         $soggettoToEdit = $soggettoGetted;
@@ -131,6 +137,7 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
     /**
      * @depends test_editingSoggetto_shouldReturnObjectWithSameProperties
      * @expectedException \XAPISdk\Clients\ResourceNotFoundException
+     * @group delete
      */
     public function test_deletingSoggetto_shouldNotBeFound(\XAPISdk\Data\BusinessObjects\Soggetto $soggettoEdited) {
         $this->_client->delete($soggettoEdited->getId());
@@ -140,6 +147,7 @@ class SoggettiClientTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @expectedException \XAPISdk\Clients\ResourceNotFoundException
+     * @group read
      */
     public function test_gettingSoggettoWithWrongId_shouldThrowException() {
         $sogg = $this->_client->get('YOU_CANNOT_FIND_ME');

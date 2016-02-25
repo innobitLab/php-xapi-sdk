@@ -25,17 +25,15 @@ class ImpegnatiArticoloClientClientTest extends PHPUnit_Framework_TestCase {
         $this->_client = $clientFactory->getClientForBusinessObject(\XAPISdk\Data\BusinessObjects\ImpegnatoArticolo::CLASS_NAME);
     }
 
-    public function test_ImpegnatiArticoloCount_shouldReturnNumber() {
-        $impegnatiArticoloCount = $this->_client->count();
-        $this->assertTrue(is_int($impegnatiArticoloCount));
-        return $impegnatiArticoloCount;
+    /**
+     * @group read
+     */
+    public function test_listingImpegnatiArticolo_shouldReturnObjectsCountAsCount() {
+        $count = $this->_client->count();
+
+        $impegnatiArticoloList = $this->_client->listAll();
+
+        $this->assertEquals($count, sizeof($impegnatiArticoloList));
     }
 
-    /**
-     * @depends test_ImpegnatiArticoloCount_shouldReturnNumber
-     */
-    public function test_listAllImpegnatiArticoloElements_shouldCountEqualImpegnatiArticoloCount($impegnatiArticoloCount) {
-        $impegnatiArticoloList = $this->_client->listAll();
-        $this->assertCount($impegnatiArticoloCount,$impegnatiArticoloList);
-    }
 }

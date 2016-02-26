@@ -19,9 +19,9 @@ abstract class AXAPIBaseClient implements IXAPIClient {
 
     // region -- CONSTANTS --
 
-    const HEADER_NAME__APIKEY    = 'X_APIKEY';
-    const HEADER_NAME__TIMESTAMP = 'X_TIMESTAMP';
-    const HEADER_NAME__SIGNATURE = 'X_SIGNATURE';
+    const HEADER_NAME__APIKEY    = 'X-APIKEY';
+    const HEADER_NAME__TIMESTAMP = 'X-TIMESTAMP';
+    const HEADER_NAME__SIGNATURE = 'X-SIGNATURE';
 
     const PARAM_QUERY__NAME = 'q';
     const PARAM_QUERY__FIELD_SEP = '|';
